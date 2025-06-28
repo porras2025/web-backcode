@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reciclaje Interactivo - Juegos y Videos</title>
+  <style>
+    body {
+      background-color: #eef6f5;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #0a7368;
+      font-weight: bold;
+    }
+    h1 {
+      color: #0a7368;
+    }
+    .galeria img {
+      width: 200px;
+      margin: 10px;
+      border-radius: 10px;
+    }
+    .video {
+      text-align: center;
+      margin: 30px 0;
+    }
+    video {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+    }
+    .juego, .memoria {
+      background-color: #fff;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #0a7368;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .memoria-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+      justify-content: center;
+    }
+    .memoria-card {
+      width: 60px;
+      height: 60px;
+      background-color: #cceee0;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Reciclaje Interactivo</h1>
+    <nav>
+      <a href="https://www.bing.com/ck/a?!&&p=cab6cadb5eb359571e0422eee35649b7adb7afd3a989652c170207ebd3d80702JmltdHM9MTc1MDk4MjQwMA&ptn=3&ver=2&hsh=4&fclid=26b72c98-7660-6f9d-17d6-38f177b56ef4&u=a1L3ZpZGVvcy9yaXZlcnZpZXcvcmVsYXRlZHZpZGVvP3E9dmlkZW8rcmVjaWNsYWJsZStlZHVjYXRpdm8mbWlkPUYxOEMyRUFDNTFDREQ0QUYxQTA2RjE4QzJFQUM1MUNERDRBRjFBMDYmRk9STT1WSVJF&ntb=1">Inicio</a>
+      <a href="https://www.bing.com/videos/riverview/relatedvideo?q=que+es+el+proyecto+paec+conalep+&&view=riverview&mmscn=mtsc&mid=9FE03D211CB64A33CC279FE03D211CB64A33CC27&&aps=61&FORM=VMSOVR">Proyecto PEC</a>
+      <a href="https://www.bing.com/videos/riverview/relatedvideo?q=reciclaje+informatico+conalep&&mid=1EB6C91DEFC99C9E03A91EB6C91DEFC99C9E03A9&FORM=VCGVRP">Informática</a>
+    </nav>
+  </header>
+
+  <section class="galeria">
+    <h2>Galería de Imágenes</h2>
+    <img src="https://static.vecteezy.com/system/resources/previews/035/907/843/non_2x/waste-water-treatment-line-icon-stroke-illustration-free-png.png" alt="Imagen 1">
+    <img src="https://tse3.mm.bing.net/th/id/OIP.BYusTHjKqdNMLrRX6BAx_wHaCe?rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3 2">
+    <img src="https://tse4.mm.bing.net/th/id/OIP.Rp9ND-tnAHm_1Bp9d9-r4QHaEK?rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3 3">
+    <img src="https://econews.global/wp-content/uploads/2024/08/reciclaje-econews.jpg" alt="Imagen 4">
+  </section>
+
+  <section class="video">
+    <h2>Video Educativo</h2>
+    <video controls>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+  </section>
+
+  <section class="juego">
+    <h3>Trivia de Reciclaje</h3>
+    <p>¿Cuál de estos elementos no es reciclable?</p>
+    <button onclick="evaluarRespuesta('papel')">Papel</button>
+    <button onclick="evaluarRespuesta('plástico')">Plástico</button>
+    <button onclick="evaluarRespuesta('espejo')">Espejo</button>
+    <p id="resultadoTrivia"></p>
+  </section>
+
+  <section class="memoria">
+    <h3>Juego de Memoria</h3>
+    <div class="memoria-grid" id="memoria"></div>
+    <p id="mensajeMemoria"></p>
+  </section>
+
+  <script>
+    function evaluarRespuesta(valor) {
+      const resultado = document.getElementById("resultadoTrivia");
+      if (valor === "espejo") {
+        resultado.textContent = "¡Correcto! El espejo no es reciclable fácilmente.";
+      } else {
+        resultado.textContent = "Ups, esa no es la respuesta correcta.";
+      }
+    }
+
+    const simbolos = ['♻️','🗑️','♻️','🗑️'];
+    let seleccion = [];
+    let bloqueado = false;
+
+    function iniciarMemoria() {
+      const contenedor = document.getElementById('memoria');
+      contenedor.innerHTML = '';
+      const mezclado = [...simbolos].sort(() => Math.random() - 0.5);
+      mezclado.forEach((simbolo, i) => {
+        const carta = document.createElement('div');
+        carta.className = 'memoria-card';
+        carta.textContent = '?';
+        carta.dataset.simbolo = simbolo;
+        carta.dataset.index = i;
+        carta.addEventListener('click', function() {
+          if (bloqueado || this.textContent !== '?') return;
+          this.textContent = this.dataset.simbolo;
+          seleccion.push(this);
+          if (seleccion.length === 2) {
+            bloqueado = true;
+            setTimeout(() => {
+              if (seleccion[0].dataset.simbolo === seleccion[1].dataset.simbolo) {
+                document.getElementById("mensajeMemoria").textContent = "¡Bien hecho! Par encontrado.";
+              } else {
+                seleccion[0].textContent = '?';
+                seleccion[1].textContent = '?';
+                document.getElementById("mensajeMemoria").textContent = "Intenta de nuevo.";
+              }
+              seleccion = [];
+              bloqueado = false;
+            }, 800);
+          }
+        });
+        contenedor.appendChild(carta);
+      });
+    }
+
+    window.onload = iniciarMemoria;
+  </script>
+</body>
+</html>
